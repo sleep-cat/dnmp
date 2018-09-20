@@ -1,0 +1,91 @@
+version: "3"
+
+networks:
+    www-network:
+        driver: bridge 
+
+services:
+  mysql:
+    container_name: dnmp_mysql
+    build:
+      context: ./docker/mysql/
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - ./mysql:/var/lib/mysql
+      - ./conf/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./log/mysql/:/var/log/mysql
+      - ./docker/mysql/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    networks:
+      - www-network
+
+  redis:
+    container_name: dnmp_redis
+    build:
+      context: ./docker/redis/
+    volumes:
+      - ./conf/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - "6379:6379"
+    networks:
+      - www-network
+
+  php-worker:
+    container_name: dnmp_php-worker
+    build:
+      context: ./docker/php-worker/
+    volumes: 
+      - ./www/:/var/www
+      - ./conf/php-worker/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php-worker/supervisord.conf:/etc/supervisor/supervisord.conf
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - www-network
+
+  php-fpm:
+    container_name: dnmp_php-fpm
+    build:
+      context: ./docker/php-fpm/
+    volumes:
+      - ./www:/var/www
+      - ./conf/php-fpm/php.ini:/usr/local/etc/php/php.ini
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - www-network
+
+  # php-fpm56:
+  #   container_name: dnmp_php-fpm56
+  #   build:
+  #     context: ./docker/php-fpm56/
+  #   volumes:
+  #     - ./www:/var/www
+  #     - ./conf/php-fpm56/php.ini:/usr/local/etc/php/php.ini
+  #   depends_on:
+  #     - mysql
+  #     - redis
+  #   networks:
+  #     - www-network
+
+  nginx:
+    container_name: dnmp_nginx
+    build:
+      context: ./docker/nginx/
+    volumes:
+      - ./www/:/var/www
+      - ./conf/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/nginx/conf.d/:/etc/nginx/conf.d
+      - ./log/nginx/:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - php-fpm
+    networks:
+      - www-network
+
