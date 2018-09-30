@@ -1,4 +1,3 @@
-*
 !conf.d/default.conf
 !nginx.conf
 !.gitignore
