@@ -32,27 +32,27 @@ services:
     networks:
       - www-network
 
-  php-cli:
-    container_name: dnmp-php-cli
+  work:
+    container_name: dnmp-work
     build:
-      context: ./docker/php-cli/
+      context: ./docker/work/
     volumes: 
       - ./www/:/var/www
-      - ./conf/php-cli/php.ini:/usr/local/etc/php/php.ini
-      - ./conf/php-cli/supervisord.conf:/etc/supervisor/supervisord.conf
+      - ./conf/work/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/work/supervisord.conf:/etc/supervisor/supervisord.conf
     depends_on:
       - mysql
       - redis
     networks:
       - www-network
 
-  php-fpm:
-    container_name: dnmp-php-fpm
+  php:
+    container_name: dnmp-php
     build:
-      context: ./docker/php-fpm/
+      context: ./docker/php/
     volumes:
       - ./www:/var/www
-      - ./conf/php-fpm/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php/php.ini:/usr/local/etc/php/php.ini
     depends_on:
       - mysql
       - redis
