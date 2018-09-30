@@ -14,7 +14,13 @@ curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compos
 ```
 git clone https://gitee.com/shanyu/dnmp.git
 cd dnmp
+
+#启动
 docker-compose up -d --build
+
+#关闭
+docker-compose down
+
 ```
 
 #### 使用说明
@@ -29,7 +35,7 @@ docker-compose up -d --build
 * phpunit: `docker exec dnmp-work phpunit`
 
 #### 常用命令
-* 进入指定容器: `docker exec -it dnmp_nginx sh`
+* 进入指定容器: `docker exec -it dnmp-nginx sh`
 * 查看容器状态: `docker-compose ps`
 * 查看容器日志: `docker-compose logs -f`
 
