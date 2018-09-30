@@ -6,7 +6,7 @@ networks:
 
 services:
   mysql:
-    container_name: dnmp_mysql
+    container_name: dnmp-mysql
     build:
       context: ./docker/mysql/
     environment:
@@ -22,7 +22,7 @@ services:
       - www-network
 
   redis:
-    container_name: dnmp_redis
+    container_name: dnmp-redis
     build:
       context: ./docker/redis/
     volumes:
@@ -32,8 +32,8 @@ services:
     networks:
       - www-network
 
-  php-worker:
-    container_name: dnmp_php-cli
+  php-cli:
+    container_name: dnmp-php-cli
     build:
       context: ./docker/php-cli/
     volumes: 
@@ -47,7 +47,7 @@ services:
       - www-network
 
   php-fpm:
-    container_name: dnmp_php-fpm
+    container_name: dnmp-php-fpm
     build:
       context: ./docker/php-fpm/
     volumes:
@@ -60,7 +60,7 @@ services:
       - www-network
 
   nginx:
-    container_name: dnmp_nginx
+    container_name: dnmp-nginx
     build:
       context: ./docker/nginx/
     volumes:
