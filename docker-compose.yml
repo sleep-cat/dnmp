@@ -33,13 +33,13 @@ services:
       - www-network
 
   php-worker:
-    container_name: dnmp_php-worker
+    container_name: dnmp_php-cli
     build:
-      context: ./docker/php-worker/
+      context: ./docker/php-cli/
     volumes: 
       - ./www/:/var/www
-      - ./conf/php-worker/php.ini:/usr/local/etc/php/php.ini
-      - ./conf/php-worker/supervisord.conf:/etc/supervisor/supervisord.conf
+      - ./conf/php-cli/php.ini:/usr/local/etc/php/php.ini
+      - ./conf/php-cli/supervisord.conf:/etc/supervisor/supervisord.conf
     depends_on:
       - mysql
       - redis
@@ -58,19 +58,6 @@ services:
       - redis
     networks:
       - www-network
-
-  # php-fpm56:
-  #   container_name: dnmp_php-fpm56
-  #   build:
-  #     context: ./docker/php-fpm56/
-  #   volumes:
-  #     - ./www:/var/www
-  #     - ./conf/php-fpm56/php.ini:/usr/local/etc/php/php.ini
-  #   depends_on:
-  #     - mysql
-  #     - redis
-  #   networks:
-  #     - www-network
 
   nginx:
     container_name: dnmp_nginx
