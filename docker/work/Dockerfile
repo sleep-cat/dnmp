@@ -48,9 +48,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ 
 
 # XDEBUG
 #RUN export http_proxy=http://172.23.149.241:1080 && export https_proxy=http://172.23.149.241:1080
-RUN pecl install xdebug && \
-    docker-php-ext-enable xdebug
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
+#RUN pecl install xdebug && \
+#    docker-php-ext-enable xdebug
+#COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # PHPUNIT
 RUN wget http://phar.phpunit.cn/phpunit.phar && \

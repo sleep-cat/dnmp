@@ -25,8 +25,8 @@ docker-compose up -d --build
 * 默认密码 root
 ##### php-work
 * 默认目录: `./www`映射目录`/var/www`
-* composer: `docker exec dnmp_php-worker composer`
-* phpunit: `docker exec dnmp_php-worker phpunit`
+* composer: `docker exec dnmp-work composer`
+* phpunit: `docker exec dnmp-work phpunit`
 
 #### 常用命令
 * 进入指定容器: `docker exec -it dnmp_nginx sh`
