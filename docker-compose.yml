@@ -1,8 +1,8 @@
 version: "3"
 
 networks:
-    www-network:
-        driver: bridge 
+  www-network:
+    driver: bridge 
 
 services:
   mysql:
@@ -72,7 +72,7 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - php-fpm
+      - php
     networks:
       - www-network
 
