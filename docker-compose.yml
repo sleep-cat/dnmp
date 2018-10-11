@@ -53,7 +53,6 @@ services:
     volumes:
       - ./www:/var/www
       - ./conf/php/php.ini:/usr/local/etc/php/php.ini
-      - ./conf/php/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - ./log/php:/var/log/php
     depends_on:
       - mysql

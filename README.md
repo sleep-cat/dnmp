@@ -16,7 +16,7 @@ git clone https://gitee.com/shanyu/dnmp.git
 cd dnmp
 
 #启动
-docker-compose up -d --build
+docker-compose up -d
 
 #关闭
 docker-compose down
@@ -42,6 +42,6 @@ docker-compose down
 #### 程序版本
 * nginx:1.14.0
 * php:7.0.30-fpm
-* php:7.0.30-cli
+* work:7.0.30-cli+supervisor
 * mysql:5.6.40
 * redis:4.0.10
