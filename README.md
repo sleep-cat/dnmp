@@ -1,7 +1,7 @@
-## 项目介绍
-Docker环境下构造PHP开发环境  
+## 介绍
+基于Docker构建PHP开发环境( Docker + Nginx + MySQL + PHP7 + REDIS )
 
-## LINUX安装
+## 安装(LINUX)
 1. 安装docker  
 ```
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
@@ -28,7 +28,7 @@ docker-compose down
 ```
 
 ## 说明
-### mysql
+### Mysql
 * 调整权限允许root远程登陆mysql `./docker/mysql/docker-entrypoint-initdb.d/remote.sql`
 * 连接地址:mysql 连接密码:root 配置示例:
 ```
@@ -39,7 +39,7 @@ DB_DATABASE=test
 DB_USERNAME=root
 DB_PASSWORD=root
 ```
-### redis
+### Redis
 * 连接地址:redis 连接密码:root 配置示例:
 ```
 REDIS_HOST=redis
@@ -47,12 +47,12 @@ REDIS_PASSWORD=root
 REDIS_PORT=6379
 ```
 
-### php-work
+### Work
 * 默认目录: `./www`映射目录`/var/www`
 * composer: `docker exec dnmp-work composer`
 * phpunit: `docker exec dnmp-work phpunit`
 
-### 常用命令
+### 命令
 * 进入指定容器: `docker exec -it dnmp-nginx sh`
 * 查看容器状态: `docker-compose ps`
 * 查看容器日志: `docker-compose logs -f`
