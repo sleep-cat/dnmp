@@ -12,8 +12,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./data/mysql:/var/lib/mysql
-      - ./log/mysql:/var/log/mysql
+      - ./data/mysql/lib:/var/lib/mysql
+      - ./data/mysql/log:/var/log/mysql
     ports:
       - "3306:3306"
     networks:
@@ -24,7 +24,7 @@ services:
     build:
       context: ./docker/redis/
     volumes:
-      - ./data/redis:/data
+      - ./data/redis/dump.rdb:/data/dump.rdb
     ports:
       - "6379:6379"
     networks:
@@ -36,7 +36,8 @@ services:
       context: ./docker/work/
     volumes: 
       - ./www:/var/www
-      - ./conf/supervisord:/etc/supervisor/supervisord.d
+      - ./data/work/supervisord.d:/etc/supervisor/supervisord.d
+      - ./data/work/cron.d:/etc/cron.d
     depends_on:
       - mysql
       - redis
@@ -49,7 +50,7 @@ services:
       context: ./docker/php/
     volumes:
       - ./www:/var/www
-      - ./log/php:/var/log/php
+      - ./data/php/log:/var/log/php
     depends_on:
       - mysql
       - redis
@@ -62,8 +63,8 @@ services:
       context: ./docker/nginx/
     volumes:
       - ./www:/var/www
-      - ./log/nginx:/var/log/nginx
-      - ./conf/nginx:/etc/nginx/conf.d
+      - ./data/nginx/log:/var/log/nginx
+      - ./data/nginx/conf.d:/etc/nginx/conf.d
     ports:
       - "80:80"
       - "443:443"
