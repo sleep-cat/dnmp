@@ -58,13 +58,17 @@ RUN wget http://phar.phpunit.cn/phpunit.phar && \
     mv phpunit.phar /usr/local/bin/phpunit
 
 # CRONTAB
-#RUN apt-get install -y cron
+RUN apt-get install -y cron
 COPY ./cron.d /etc/cron.d
 RUN chmod -R 644 /etc/cron.d
 
 # SUPERVISOR
 RUN apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisord.conf
+
+# ACME
+RUN curl https://get.acme.sh | sh 
+RUN mkdir /root/.acme.sh/certs && echo "CERT_HOME='/root/.acme.sh/certs'" >> /root/.acme.sh/account.conf
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get clean
 
