@@ -23,8 +23,8 @@ services:
     container_name: dnmp-redis
     build:
       context: ./docker/redis/
-    environment:
-      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      args:
+        - REDIS_PASSWORD=${REDIS_PASSWORD}
     volumes:
       - ./data/redis:/data
     ports:
