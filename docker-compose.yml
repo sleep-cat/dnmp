@@ -20,11 +20,7 @@ services:
       - www-network
 
   redis:
-    container_name: dnmp-redis
-    build:
-      context: ./docker/redis/
-      args:
-        - REDIS_PASSWORD=${REDIS_PASSWORD}
+    image: redis:4.0.10
     ports:
       - "6379:6379"
     networks:
