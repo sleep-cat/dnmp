@@ -36,6 +36,7 @@ RUN docker-php-ext-configure gd \
 RUN rm -rf /var/lib/apt/lists/* && apt-get clean
 
 COPY ./php.ini /usr/local/etc/php/php.ini
+COPY ./php-fpm.conf /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /var/www
 
