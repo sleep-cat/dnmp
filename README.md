@@ -16,7 +16,7 @@ curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compos
 
 3. 启动Dnmp  
 ```
-git clone https://gitee.com/shanyu/dnmp.git
+git clone https://github.com/sleep-cat/dnmp
 cd dnmp
 
 #启动
