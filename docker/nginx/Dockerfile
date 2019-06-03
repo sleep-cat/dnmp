@@ -7,8 +7,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # COPY nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
-EXPOSE 80 443
+EXPOSE 80
 
 # CMD ["nginx", "-g", "daemon off;"]

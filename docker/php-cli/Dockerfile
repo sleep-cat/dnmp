@@ -36,11 +36,11 @@ RUN docker-php-ext-install mysqli \
 RUN docker-php-ext-install mcrypt
 
 # GD
-RUN docker-php-ext-configure gd \
-        --enable-gd-native-ttf \
-        --with-jpeg-dir=/usr/lib \
-        --with-freetype-dir=/usr/include/freetype2 && \
-    docker-php-ext-install gd
+# RUN docker-php-ext-configure gd \
+#         --enable-gd-native-ttf \
+#         --with-jpeg-dir=/usr/lib \
+#         --with-freetype-dir=/usr/include/freetype2 && \
+#     docker-php-ext-install gd
 
 # COMPOSER
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin/ --filename=composer
@@ -67,13 +67,13 @@ RUN apt-get install -y supervisor
 COPY supervisord.conf /etc/supervisord.conf
 
 # ACME
-RUN curl https://get.acme.sh | sh 
-RUN mkdir /root/.acme.sh/certs && echo "CERT_HOME='/root/.acme.sh/certs'" >> /root/.acme.sh/account.conf
+# RUN curl https://get.acme.sh | sh 
+# RUN mkdir /root/.acme.sh/certs && echo "CERT_HOME='/root/.acme.sh/certs'" >> /root/.acme.sh/account.conf
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get clean
 
 COPY ./php.ini /usr/local/etc/php/php.ini
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]

@@ -1,7 +1,7 @@
 version: "3"
 
 networks:
-  www-network:
+  networker:
     driver: bridge 
 
 services:
@@ -17,7 +17,7 @@ services:
     ports:
       - "3306:3306"
     networks:
-      - www-network
+      - networker
 
   redis:
     container_name: dnmp-redis
@@ -28,50 +28,49 @@ services:
     ports:
       - "6379:6379"
     networks:
-      - www-network
+      - networker
 
-  work:
-    container_name: dnmp-work
+  php-cli:
+    container_name: dnmp-php-cli
     build:
-      context: ./docker/work/
+      context: ./docker/php-cli/
     volumes: 
-      - ./www:/var/www
-      - ./data/work/supervisord.d:/etc/supervisor/supervisord.d
-      - ./data/work/cron.d:/etc/cron.d
-      - ./data/work/certs:/root/.acme.sh/certs
+      - ./html:/var/www/html
+      - ./data/php-cli/supervisord.d:/etc/supervisor/supervisord.d
+      - ./data/php-cli/cron.d:/etc/cron.d
+      - ./data/php-cli/certs:/root/.acme.sh/certs
     depends_on:
       - mysql
       - redis
     networks:
-      - www-network
+      - networker
 
   php:
-    container_name: dnmp-php
+    container_name: dnmp-php-fpm
     build:
-      context: ./docker/php/
+      context: ./docker/php-fpm/
     volumes:
-      - ./www:/var/www
-      - ./data/php/log:/var/log/php
+      - ./html:/var/www/html
+      - ./data/php/log:/var/log/php-fpm
     depends_on:
       - mysql
       - redis
     networks:
-      - www-network
+      - networker
 
   nginx:
     container_name: dnmp-nginx
     build:
       context: ./docker/nginx/
     volumes:
-      - ./www:/var/www
+      - ./html:/var/www/html
       - ./data/nginx/log:/var/log/nginx
       - ./data/nginx/conf.d:/etc/nginx/conf.d
       - ./data/work/certs:/etc/nginx/certs
     ports:
       - "80:80"
-      - "443:443"
     depends_on:
       - php
     networks:
-      - www-network
+      - networker
 
