@@ -30,28 +30,28 @@ services:
     networks:
       - networker
 
-  php-cli:
-    container_name: dnmp-php-cli
+  php:
+    container_name: dnmp-php
     build:
-      context: ./docker/php-cli/
+      context: ./docker/php/
     volumes: 
       - ./html:/var/www/html
-      - ./data/php-cli/supervisord.d:/etc/supervisor/supervisord.d
-      - ./data/php-cli/cron.d:/etc/cron.d
-      - ./data/php-cli/certs:/root/.acme.sh/certs
+      - ./data/php/supervisord.d:/etc/supervisor/supervisord.d
+      - ./data/php/cron.d:/etc/cron.d
+      - ./data/php/certs:/root/.acme.sh/certs
     depends_on:
       - mysql
       - redis
     networks:
       - networker
 
-  php:
+  php-fpm:
     container_name: dnmp-php-fpm
     build:
       context: ./docker/php-fpm/
     volumes:
       - ./html:/var/www/html
-      - ./data/php/log:/var/log/php-fpm
+      - ./data/php-fpm/log:/var/log/php
     depends_on:
       - mysql
       - redis
@@ -70,7 +70,7 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - php
+      - php-fpm
     networks:
       - networker
 

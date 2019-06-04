@@ -47,10 +47,9 @@ REDIS_PASSWORD=root
 REDIS_PORT=6379
 ```
 
-### Work
-* 默认目录: `./www`映射目录`/var/www`
-* composer: `docker exec dnmp-work composer`
-* phpunit: `docker exec dnmp-work phpunit`
+### PHP
+* composer: `docker exec dnmp-php composer`
+* phpunit: `docker exec dnmp-php phpunit`
 
 ### 命令
 * 进入指定容器: `docker exec -it dnmp-nginx sh`
@@ -59,7 +58,7 @@ REDIS_PORT=6379
 
 ## 版本
 * nginx:1.14.0
-* php:7.0.30-fpm
-* work:7.0.30-cli+supervisor
+* php-fpm:7.0.30-fpm
+* php:7.0.30-cli+supervisor
 * mysql:5.6.40
 * redis:4.0.10
